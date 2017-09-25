@@ -22,5 +22,17 @@ namespace TmonNano.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConnectOnStartup {
+            get {
+                return ((bool)(this["ConnectOnStartup"]));
+            }
+            set {
+                this["ConnectOnStartup"] = value;
+            }
+        }
     }
 }

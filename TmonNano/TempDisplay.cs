@@ -66,21 +66,25 @@ namespace TmonNano
             string pp = "    ";
             if (value > average)
             {
-                pp = " ↑";
+                pp = "↑";
             }
             else if (value < average)
             {
-                pp = " ↓";
+                pp = "↓";
             }
             if (average == value || average == value + 00.01 || average == value - 00.01)
             {
-                pp = "    ";
+                pp = "";
             }
             if (value > max) // max
                 max = value;
             if (value < min)
                 min = value;
-            label1.Text = "  " + value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + " °C" + pp;
+
+            string tmpstr = value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
+            label1.Text = "    " + tmpstr.Substring(0, tmpstr.Length - 1);
+            label5.Text = tmpstr.Substring(tmpstr.Length - 1, 1);
+            label6.Text = "°C" + pp;
             label2.Text = "Min: " + min;
             label3.Text = "Max: " + max;
             samples.Add(value);

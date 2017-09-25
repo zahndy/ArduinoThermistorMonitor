@@ -53,6 +53,7 @@ namespace TmonNano
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.connectOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +66,7 @@ namespace TmonNano
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.menuStrip1.Size = new System.Drawing.Size(213, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(203, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -73,7 +74,8 @@ namespace TmonNano
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.alwaysOnTopToolStripMenuItem});
+            this.alwaysOnTopToolStripMenuItem,
+            this.connectOnStartupToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 24);
             this.fileToolStripMenuItem.Text = "File";
@@ -98,7 +100,7 @@ namespace TmonNano
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 264);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(213, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(203, 22);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -115,15 +117,22 @@ namespace TmonNano
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(213, 240);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(203, 240);
             this.flowLayoutPanel1.TabIndex = 8;
+            // 
+            // connectOnStartupToolStripMenuItem
+            // 
+            this.connectOnStartupToolStripMenuItem.Name = "connectOnStartupToolStripMenuItem";
+            this.connectOnStartupToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.connectOnStartupToolStripMenuItem.Text = "Connect On Startup";
+            this.connectOnStartupToolStripMenuItem.Click += new System.EventHandler(this.connectOnStartupToolStripMenuItem_Click);
             // 
             // TMonN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(213, 286);
+            this.ClientSize = new System.Drawing.Size(203, 286);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -149,6 +158,7 @@ namespace TmonNano
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectOnStartupToolStripMenuItem;
     }
 }
 

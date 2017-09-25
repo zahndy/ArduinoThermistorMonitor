@@ -34,12 +34,18 @@ namespace TmonNano
         SerialPort serialPort1;
         ArduinoControllerMain ArduinoController;
         int SensorAmount;
+        bool flipper;
         public TMonN()
         {
             InitializeComponent();
             SensorAmount = 0;
             ArduinoController = new ArduinoControllerMain();
             this.FormClosing += Form1_FormClosing;
+            flipper = false;
+            if (Properties.Settings.Default.ConnectOnStartup)
+            {
+                Connect();
+            }
         }
 
         private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -49,7 +55,7 @@ namespace TmonNano
         }
 
         private delegate void LineReceivedEvent(string line);
-        private void LineReceived(string line)
+        private void LineReceived(string line) // update arduino to send sensor labels so we know what sensors we are getting
         {
             if (!String.Equals(line, "HELLO FROM ARDUINO"))
             {
@@ -66,14 +72,23 @@ namespace TmonNano
                     }
                     SensorAmount = sVals.Count();
                 }
+                
                 for (int i =0; i < sVals.Count(); i++)// update list items
                 { 
                     TempDisplay tmp =(TempDisplay)flowLayoutPanel1.Controls["TmpSens" + i];
                     tmp.SetTmp(double.Parse(sVals[i], CultureInfo.InvariantCulture));
                 }
+                Flip();
             }
         }
-
+        void Flip()
+        {
+            flipper = !flipper;
+            if(flipper)
+                toolStripStatusLabel1.Text = "Arduino on " + ArduinoController.FoundPortName;
+            else
+                toolStripStatusLabel1.Text = "Arduino on " + ArduinoController.FoundPortName + ".";
+        }
         void Found()
         {
             toolStripStatusLabel1.Text = "Arduino on "+ArduinoController.FoundPortName;
@@ -86,13 +101,7 @@ namespace TmonNano
             serialPort1.Open();
             serialPort1.DataReceived += serialPort1_DataReceived;
         }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            serialPort1.Close();
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        void Connect()
         {
             toolStripStatusLabel1.Text = "searching";
             Application.DoEvents();
@@ -114,11 +123,26 @@ namespace TmonNano
                 }
             }
         }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            serialPort1.Close();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Connect();
+        }
 
         private void alwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
                 alwaysOnTopToolStripMenuItem.Checked = !alwaysOnTopToolStripMenuItem.Checked;
             this.TopMost = alwaysOnTopToolStripMenuItem.Checked;
+        }
+
+        private void connectOnStartupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            connectOnStartupToolStripMenuItem.Checked = !connectOnStartupToolStripMenuItem.Checked;
+            Properties.Settings.Default.ConnectOnStartup = connectOnStartupToolStripMenuItem.Checked;
         }
        
     }
