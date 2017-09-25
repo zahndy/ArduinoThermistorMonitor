@@ -19,7 +19,8 @@
 // temp. for nominal resistance (almost always 25 C)
 #define TEMPERATURENOMINAL 25   
 // how many samples to take and average, more takes longer but is more 'smooth'
-#define NUMSAMPLES 40
+#define NUMSAMPLES 41
+#define MEDIAN 21
 // The beta coefficient of the thermistor (usually 3000-4000)
 #define BCOEFFICIENT 3950
 // the value of the 'other' resistor
@@ -36,7 +37,20 @@ void setup(void) {
   analogReference(EXTERNAL);
   digitalWrite(led2, HIGH);
 }
-
+ void insertionSort(int list[])
+{
+    int temp;
+    for(long i = 1; i < NUMSAMPLES; i++)
+    {
+        temp = list[i];
+        long j;
+        for(j = i-1; j >= 0 && list[j] > temp; j--)
+        {
+            list[j+1] = list[j];
+        }
+        list[j+1] = temp;
+    }
+}
 float MeasureTemp(int pin) {
   uint8_t i;
   float average =0;
@@ -46,10 +60,12 @@ float MeasureTemp(int pin) {
    delay(5);
   }
   // average all the samples out
-  for (i=0; i< NUMSAMPLES; i++) {
-     average += samples[i];
-  }
-  average /= NUMSAMPLES;
+  //for (i=0; i< NUMSAMPLES; i++) {
+  //   average += samples[i];
+  //}
+  //average /= NUMSAMPLES;
+  insertionSort(samples);
+  average = samples[MEDIAN];
   // convert the value to resistance
   average = 1023 / average - 1;
   average = SERIESRESISTOR / average;
