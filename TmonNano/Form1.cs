@@ -40,7 +40,6 @@ namespace TmonNano
             InitializeComponent();
             SensorAmount = 0;
             ArduinoController = new ArduinoControllerMain();
-            this.FormClosing += Form1_FormClosing;
             flipper = false;
             if (Properties.Settings.Default.ConnectOnStartup)
             {
@@ -123,9 +122,28 @@ namespace TmonNano
                 }
             }
         }
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            serialPort1.Close();
+            e.Cancel = true;
+            if (serialPort1 != null)
+            {
+                if (serialPort1.IsOpen)
+                    serialPort1.Close();
+            }
+
+            Properties.Settings.Default.Save();
+            base.OnFormClosing(e);
+           // if (System.Windows.Forms.Application.MessageLoop)
+           // {
+                // WinForms app
+             //   System.Windows.Forms.Application.Exit();
+           // }
+            //else
+           // {
+                // Console app
+                System.Environment.Exit(1);         //workaround?
+            //}
+
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
